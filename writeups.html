@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedShield | Writeups</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="image.jpg" alt="Logo"/>
+    <span>RedShield</span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html"    id="nav-inicio">Inicio</a></li>
+    <li><a href="writeups.html" id="nav-writeups">Writeups</a></li>
+    <li><a href="contacto.html" id="nav-contacto">Contacto</a></li>
+  </ul>
+</nav>
+<div class="page-wrap">
+  <div class="hero-mini">
+    <h1>Write<span>ups</span></h1>
+    <p>// Máquinas resueltas y documentadas</p>
+  </div>
+  <div class="page-main">
+    <div class="controls">
+      <input type="text" id="q" placeholder="🔍  Buscar máquina..." oninput="render()"/>
+      <select id="fD" onchange="render()">
+        <option value="">Todas las dificultades</option>
+        <option value="easy">Easy</option><option value="medium">Medium</option>
+        <option value="hard">Hard</option><option value="insane">Insane</option>
+      </select>
+      <select id="fP" onchange="render()">
+        <option value="">Todas las plataformas</option>
+        <option value="HackTheBox">HackTheBox</option><option value="TryHackMe">TryHackMe</option>
+        <option value="VulnHub">VulnHub</option><option value="Otro">Otro</option>
+      </select>
+      <select id="fO" onchange="render()">
+        <option value="">Todos los SO</option>
+        <option value="Linux">Linux</option><option value="Windows">Windows</option><option value="FreeBSD">FreeBSD</option>
+      </select>
+    </div>
+    <div class="wu-grid" id="wuGrid"></div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 <span>RedShield</span> &nbsp;·&nbsp; Built for hackers &nbsp;·&nbsp; <span>root@redshield:~#</span></p>
+</footer>
+<script src="writeups.js"></script>
+<script>
+  document.getElementById('nav-writeups').classList.add('active');
+  
+  const hb = document.getElementById('hamburger');
+  const nl = document.getElementById('navLinks');
+  hb.addEventListener('click', () => { hb.classList.toggle('open'); nl.classList.toggle('open'); });
+  document.addEventListener('click', e => { if(!e.target.closest('nav')){hb.classList.remove('open');nl.classList.remove('open');} });
+
+  function render() {
+    const q=document.getElementById('q').value.toLowerCase();
+    const d=document.getElementById('fD').value;
+    const p=document.getElementById('fP').value;
+    const o=document.getElementById('fO').value;
+    const f=WRITEUPS.filter(w=>
+      (!q||w.name.toLowerCase().includes(q)||w.desc.toLowerCase().includes(q))&&
+      (!d||w.diff===d)&&(!p||w.platform===p)&&(!o||w.os===o));
+    document.getElementById('wuGrid').innerHTML = f.length
+      ? f.map(w=>`<a class="wu-card" href="writeup.html?id=${w.id}">
+          <span class="wu-badge ${w.diff}">${w.diff.toUpperCase()}</span>
+          <h3>${w.name}</h3><p>${w.desc}</p>
+          <div class="wu-meta"><span class="wu-platform">${w.platform}</span><span>${w.os} · ${w.date}</span></div>
+        </a>`).join('')
+      : '<div class="wu-empty">No se encontraron writeups.</div>';
+  }
+  render();
+</script>
+</body></html>

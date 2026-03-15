@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedShield | Detalle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="image.jpg" alt="Logo"/>
+    <span>RedShield</span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html"    id="nav-inicio">Inicio</a></li>
+    <li><a href="writeups.html" id="nav-writeups">Writeups</a></li>
+    <li><a href="contacto.html" id="nav-contacto">Contacto</a></li>
+  </ul>
+</nav>
+<div class="page-wrap">
+  <div class="detail-wrap" id="content"><p style="color:var(--text-dim)">Cargando…</p></div>
+</div>
+<footer>
+  <p>© 2026 <span>RedShield</span> &nbsp;·&nbsp; Built for hackers &nbsp;·&nbsp; <span>root@redshield:~#</span></p>
+</footer>
+<script src="writeups.js"></script>
+<script>
+  
+  const hb = document.getElementById('hamburger');
+  const nl = document.getElementById('navLinks');
+  hb.addEventListener('click', () => { hb.classList.toggle('open'); nl.classList.toggle('open'); });
+  document.addEventListener('click', e => { if(!e.target.closest('nav')){hb.classList.remove('open');nl.classList.remove('open');} });
+
+  const id = parseInt(new URLSearchParams(location.search).get('id'));
+  const w  = WRITEUPS.find(x => x.id === id);
+  const el = document.getElementById('content');
+  if (w) {
+    const CMD = /^(nmap|curl|python|msfconsole|exploit|Get|enum|hashcat|secretsdump|gobuster|sudo|ssh|wget|nc |cat |ls |cd |chmod)/i;
+    const body = w.content.split('\n').map(l => {
+      if (l.startsWith('## '))  return `<h2>${l.slice(3)}</h2>`;
+      if (l.startsWith('### ')) return `<h3>${l.slice(4)}</h3>`;
+      if (CMD.test(l.trim()))   return `<pre>${l}</pre>`;
+      if (l.trim())             return `<p>${l}</p>`;
+      return '';
+    }).join('');
+    el.innerHTML = `
+      <a href="writeups.html" class="back-btn">← Volver a writeups</a>
+      <div class="wu-header">
+        <span class="wu-badge ${w.diff}">${w.diff.toUpperCase()}</span>
+        <h1>${w.name}</h1>
+        <div class="wu-header-meta">
+          <span>🖥 ${w.platform}</span><span>🐧 ${w.os}</span><span>📅 ${w.date}</span>
+        </div>
+      </div>
+      <div class="content-body">${body}</div>`;
+  } else {
+    el.innerHTML = `<div class="not-found"><h2>404</h2><p>Writeup no encontrado.</p>
+      <a href="writeups.html" class="btn btn-outline" style="margin-top:1.5rem">← Volver</a></div>`;
+  }
+</script>
+</body></html>

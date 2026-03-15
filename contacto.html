@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedShield | Contacto</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="image.jpg" alt="Logo"/>
+    <span>RedShield</span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html"    id="nav-inicio">Inicio</a></li>
+    <li><a href="writeups.html" id="nav-writeups">Writeups</a></li>
+    <li><a href="contacto.html" id="nav-contacto">Contacto</a></li>
+  </ul>
+</nav>
+<div class="page-wrap">
+  <div class="hero-mini">
+    <h1><span>Contacto</span></h1>
+    <p>// ¿Hablamos de hacking?</p>
+  </div>
+  <div class="page-main">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Escríbeme</h2>
+        <p>¿Tienes alguna pregunta, quieres colaborar en un CTF, hacer bug bounty juntos o simplemente hablar de hacking? No dudes en escribirme.</p>
+        <div class="c-links">
+          <a href="mailto:contacto@redshield.io" class="c-link"><span class="c-icon">✉</span> contacto@redshield.io</a>
+          <a href="#" class="c-link"><span class="c-icon">🐦</span> @RedShieldSec</a>
+          <a href="#" class="c-link"><span class="c-icon">🐙</span> github.com/redshield</a>
+          <a href="#" class="c-link"><span class="c-icon">💬</span> Discord: RedShield#0001</a>
+          <a href="#" class="c-link"><span class="c-icon">🎯</span> HTB: RedShield</a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="send(event)">
+        <div class="form-row">
+          <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre" required/></div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com" required/></div>
+        </div>
+        <div class="form-group"><label>Asunto</label><input type="text" placeholder="¿Sobre qué quieres hablar?"/></div>
+        <div class="form-group"><label>Mensaje</label><textarea placeholder="Escribe tu mensaje…"></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;padding:1rem">[ ENVIAR MENSAJE ]</button>
+        <div class="notify" id="msgOk">✔ Mensaje enviado. ¡Te respondo pronto!</div>
+      </form>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 <span>RedShield</span> &nbsp;·&nbsp; Built for hackers &nbsp;·&nbsp; <span>root@redshield:~#</span></p>
+</footer>
+<script>
+  document.getElementById('nav-contacto').classList.add('active');
+  
+  const hb = document.getElementById('hamburger');
+  const nl = document.getElementById('navLinks');
+  hb.addEventListener('click', () => { hb.classList.toggle('open'); nl.classList.toggle('open'); });
+  document.addEventListener('click', e => { if(!e.target.closest('nav')){hb.classList.remove('open');nl.classList.remove('open');} });
+
+  function send(e) {
+    e.preventDefault();
+    const n = document.getElementById('msgOk');
+    n.style.display = 'block';
+    e.target.reset();
+    setTimeout(() => n.style.display = 'none', 5000);
+  }
+</script>
+</body></html>

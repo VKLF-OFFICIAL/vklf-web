@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RedShield | Inicio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="image.jpg" alt="Logo"/>
+    <span>RedShield</span>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html"    id="nav-inicio">Inicio</a></li>
+    <li><a href="writeups.html" id="nav-writeups">Writeups</a></li>
+    <li><a href="contacto.html" id="nav-contacto">Contacto</a></li>
+  </ul>
+</nav>
+<div class="page-wrap">
+
+  <div class="hero-full">
+    <div class="hero-grid-bg"></div>
+    <img src="image.jpg" class="hero-logo" alt="Logo"/>
+    <h1><span>Red</span>Shield</h1>
+    <p class="tagline">// HACKING &nbsp;·&nbsp; CTF &nbsp;·&nbsp; WRITEUPS &nbsp;·&nbsp; PENTEST &nbsp;<span class="blink">_</span></p>
+    <div class="hero-btns">
+      <a href="writeups.html" class="btn btn-primary">Ver Writeups</a>
+      <a href="contacto.html" class="btn btn-outline">Contactar</a>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num" id="cntM">0</div><div class="stat-label">Máquinas</div></div>
+      <div class="stat"><div class="stat-num" id="cntC">0</div><div class="stat-label">CTFs</div></div>
+      <div class="stat"><div class="stat-num" id="cntT">0</div><div class="stat-label">Tools</div></div>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="about-img"><img src="image.jpg" alt="RedShield"/></div>
+    <div class="about-text">
+      <span class="section-tag">// Sobre mí</span>
+      <h2>Hacker <span style="color:var(--red-light)">Ético</span></h2>
+      <p>Apasionado de la ciberseguridad, CTFs y pentesting. Aquí documento mis writeups de máquinas resueltas en plataformas como HackTheBox y TryHackMe.</p>
+      <p>Mi objetivo es aprender, compartir conocimiento y avanzar en el camino hacia certificaciones como eJPT y OSCP.</p>
+      <div class="skill-tags">
+        <span class="skill-tag">Linux</span><span class="skill-tag">Nmap</span>
+        <span class="skill-tag">Burp Suite</span><span class="skill-tag">Metasploit</span>
+        <span class="skill-tag">Python</span><span class="skill-tag">SQLi</span>
+        <span class="skill-tag">PrivEsc</span><span class="skill-tag">Active Directory</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="recent-section">
+    <div class="section-header">
+      <span class="section-tag">// Últimas entradas</span>
+      <h2 class="section-title">Writeups <span>Recientes</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="wu-grid" id="recentGrid"></div>
+    <div class="center"><a href="writeups.html" class="btn btn-outline">Ver todos →</a></div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 <span>RedShield</span> &nbsp;·&nbsp; Built for hackers &nbsp;·&nbsp; <span>root@redshield:~#</span></p>
+</footer>
+<script src="writeups.js"></script>
+<script>
+  document.getElementById('nav-inicio').classList.add('active');
+  
+  const hb = document.getElementById('hamburger');
+  const nl = document.getElementById('navLinks');
+  hb.addEventListener('click', () => { hb.classList.toggle('open'); nl.classList.toggle('open'); });
+  document.addEventListener('click', e => { if(!e.target.closest('nav')){hb.classList.remove('open');nl.classList.remove('open');} });
+
+  function animCount(el, t) {
+    let s = 0, step = t / 60;
+    const ti = setInterval(() => { s += step; if(s>=t){el.textContent=t;clearInterval(ti);}else el.textContent=Math.floor(s); }, 25);
+  }
+  animCount(document.getElementById('cntM'), WRITEUPS.length);
+  animCount(document.getElementById('cntC'), 12);
+  animCount(document.getElementById('cntT'), 34);
+  WRITEUPS.slice(0,3).forEach(w => {
+    document.getElementById('recentGrid').innerHTML += `
+      <a class="wu-card" href="writeup.html?id=${w.id}">
+        <span class="wu-badge ${w.diff}">${w.diff.toUpperCase()}</span>
+        <h3>${w.name}</h3><p>${w.desc}</p>
+        <div class="wu-meta"><span class="wu-platform">${w.platform}</span><span>${w.os} · ${w.date}</span></div>
+      </a>`;
+  });
+</script>
+</body></html>
